@@ -2,6 +2,52 @@ import Button from "./Button";
 import styles from "./App.module.css";
 import { useState, useEffect } from "react";
 
+// 7-3강 movie app part one
+function App() {
+    const [loading,setLoading] = useState(true);
+    const [movies,setMovies] = useState([]);
+    useEffect(() => {
+        fetch(
+            `https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`
+
+        )
+            .then((response) => response.json())
+            .then((json) => setMovies(json.data.movies));
+    }, []);
+    console.log(movies);
+    return <div>{loading ? <h1>Loading...</h1> : null}</div>;
+}
+export default App;
+
+// 7-2강 코인정보 표시
+// function App() {
+//     const [loading,setLoading] = useState(true);
+//     const [coins,setCoins] = useState([]);
+//     useEffect(() => {
+//         fetch("https://api.coinpaprika.com/v1/tickers")
+//             .then((response) => response.json())
+//             .then((json) => {
+//                 setCoins(json);
+//                 setLoading(false);
+//             });
+//     }, []);
+//     return (
+//         <div>
+//             <h1>The Coins!</h1>
+//             {loading ? <strong>Loading...</strong> : null}
+//             <ul>
+//                 {coins.map((coin) => (
+//                     <li>
+//                         {coin.name} ({coin.symbol}) : ${coin.quotes.USD.price}
+//                     </li>
+//                     )
+//                 )}
+//             </ul>
+//         </div>
+//     );
+// }
+// export default App;
+
 // 7-0강
 // form은 submit 이벤트를 갖고 있다.
 //     그러므로 evernt.preventDefault() 함수를 이용하여 기본 동작을 막자.
@@ -24,7 +70,7 @@ import { useState, useEffect } from "react";
 
 // 7-1강
 // map() 함수
-//     -> 배열을 가지고 있을 때 각각의 element들을 바꿀 수 있게 해줌map() 은 ()에 함수를 넣을 수 있는데 배열의 모든 item에 대해 실행됨
+//     -> 배열을 가지고 있을 때 각각의 element들을 바꿀 수 있게 해줌. map() 은 ()에 함수를 넣을 수 있는데 배열의 모든 item에 대해 실행됨
 // 즉 배열에 6개의 item이 있다면 6번 함수가 실행됨
 // 그리고 그 함수로부터 내가 return한 값은 새로운 배열에 들어가게 함
 //     [‘a’, ‘b’, ‘c’, ‘d’, ‘e’, ‘f’].map(() => “:)”)
@@ -43,40 +89,41 @@ import { useState, useEffect } from "react";
 // 즉,
 //     {{item},{item},{item}...}
 // 배열을 만들어 각자 고유의 key를 가지게 함
-function App() {
-    const [toDo,setToDo] = useState("");
-    const [toDos,setToDos] = useState([]);
-    const onChange = (event) => setToDo(event.target.value);
-    const onSubmit = (event) => {
-        event.preventDefault();
-        if (toDo==""){
-            return;
-        }
-        setToDos(currentArray => [toDo, ...currentArray]);
-        setToDo("");
-    };
-    console.log(toDos);
-    console.log(toDo);
-    return (
-        <div>
-            <h1>My To Dos ({toDos.length})</h1>
-            <form onSubmit={onSubmit}>
-                <input
-                    onChange={onChange}
-                    value={toDo}
-                    type="text"
-                    placeholder="Write your to do..." />
+// function App() {
+//     const [toDo,setToDo] = useState("");
+//     const [toDos,setToDos] = useState([]);
+//     const onChange = (event) => setToDo(event.target.value);
+//     const onSubmit = (event) => {
+//         event.preventDefault();
+//         if (toDo==""){
+//             return;
+//         }
+//         setToDos(currentArray => [toDo, ...currentArray]);
+//         setToDo("");
+//     };
+//     console.log(toDos);
+//     console.log(toDo);
+//     return (
+//         <div>
+//             <h1>My To Dos ({toDos.length})</h1>
+//             <form onSubmit={onSubmit}>
+//                 <input
+//                     onChange={onChange}
+//                     value={toDo}
+//                     type="text"
+//                     placeholder="Write your to do..." />
+//
+//                 <button>Add To Do</button>
+//             </form>
+//             <hr />
+//             <ul>
+//             {toDos.map((item,index) => (<li key={index}>{item}</li>))}
+//             </ul>
+//         </div>
+//     )
+// }
+// export default App;
 
-                <button>Add To Do</button>
-            </form>
-            <hr />
-            <ul>
-            {toDos.map((item,index) => (<li key={index}>{item}</li>))}
-            </ul>
-        </div>
-    )
-}
-export default App;
 // 6강
 //🔥 새롭게 배운 내용 정리
 //
