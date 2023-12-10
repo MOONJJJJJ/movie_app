@@ -1,24 +1,33 @@
 import Button from "./Button";
 import styles from "./App.module.css";
-import { useState, useEffect } from "react";
+
 
 // 7-3강 movie app part one
+// fetch, json을 진행 후 로딩을 끝냈기 때문에 반드시 setLoading(false)를 해줘야함
+// then대신에 async-await를 보편적으로 사용함
+// await을 감싸는 await을 만들 수 있음
+// movies.map((movie
+//     ->map의 argument는 x, m, g 등등 마음대로 해도됨
+// 여기선 movie라고 정함
+// div key={movie.id} h2{movie.title}/h2
+// -> 이 컴포넌트들은 movie 배열에 있는 각 movie에서 변형되어 나온 것
+//
+// key={g} -> 따로 정해진 key가 없기 때문에 g를 가져와 key로 써줌
+// 단, g가 고유한 값일 경우에만 가능
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./routes/Home";
+import Detail from "./routes/Detail";
+
 function App() {
-    const [loading,setLoading] = useState(true);
-    const [movies,setMovies] = useState([]);
-    useEffect(() => {
-        fetch(
-            `https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`
-
-        )
-            .then((response) => response.json())
-            .then((json) => setMovies(json.data.movies));
-    }, []);
-    console.log(movies);
-    return <div>{loading ? <h1>Loading...</h1> : null}</div>;
+    return (<Router>
+        <Routes>
+            <Route path="/movie" element={<Detail />} />
+            <Route path="/" element={<Home />} />
+        </Routes>
+    </Router>);
 }
-export default App;
 
+export default App;
 // 7-2강 코인정보 표시
 // function App() {
 //     const [loading,setLoading] = useState(true);
